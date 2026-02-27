@@ -8,6 +8,12 @@
 <meta name="theme-color" content="#0D1117">
 <meta property="og:title" content="MadBud.dk — Bliv Partner">
 <meta property="og:description" content="Pizza boxes with local ads. Restaurants save money. Advertisers reach local customers.">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" type="image/svg+xml" href="./icon.svg">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MadBud">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -748,6 +754,10 @@ document.addEventListener('keydown', (e) => {
     if (current > 0) goSlide(current - 1);
   }
 });
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js');
+}
 
 render();
 </script>
