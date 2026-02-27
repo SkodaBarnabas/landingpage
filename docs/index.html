@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="da">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -7,7 +7,7 @@
 <meta name="description" content="Billigere pizzabakker til restauranter. Hyper-lokal annoncering for virksomheder. Bliv partner med MadBud.dk.">
 <meta name="theme-color" content="#0D1117">
 <meta property="og:title" content="MadBud.dk — Bliv Partner">
-<meta property="og:description" content="Pizzabakker med lokale annoncer. Restauranter sparer penge. Annoncorer nar lokale kunder.">
+<meta property="og:description" content="Pizza boxes with local ads. Restaurants save money. Advertisers reach local customers.">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -36,6 +36,42 @@ html, body {
   color: var(--text);
   -webkit-tap-highlight-color: transparent;
 }
+body.rtl { direction: rtl; font-family: 'Segoe UI', 'Tahoma', 'Arial', sans-serif; }
+
+/* Language bar */
+.lang-bar {
+  position: fixed;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 5px;
+  z-index: 200;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 6px 10px;
+  background: rgba(13,17,23,0.85);
+  backdrop-filter: blur(12px);
+  border-radius: 14px;
+  border: 1px solid var(--border);
+}
+.lang-btn {
+  padding: 5px 12px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.lang-btn.active {
+  border-color: var(--gold);
+  background: rgba(247,183,49,0.12);
+  color: var(--gold);
+}
 
 /* Slideshow container */
 .slideshow {
@@ -54,6 +90,7 @@ html, body {
   justify-content: center;
   align-items: center;
   padding: 40px 32px;
+  padding-top: 60px;
   position: relative;
   overflow: hidden;
 }
@@ -69,6 +106,7 @@ html, body {
   gap: 10px;
   z-index: 100;
 }
+body.rtl .nav-dots { right: auto; left: 16px; }
 .nav-dot {
   width: 10px;
   height: 10px;
@@ -187,9 +225,7 @@ html, body {
   text-decoration: none;
   min-width: 200px;
 }
-.audience-btn:hover, .audience-btn:active {
-  transform: translateY(-2px);
-}
+.audience-btn:hover, .audience-btn:active { transform: translateY(-2px); }
 .audience-btn.restaurant { border-color: rgba(52,152,219,0.4); }
 .audience-btn.restaurant:hover { background: rgba(52,152,219,0.08); box-shadow: 0 8px 32px rgba(52,152,219,0.15); }
 .audience-btn.advertiser { border-color: rgba(39,174,96,0.4); }
@@ -200,165 +236,55 @@ html, body {
 
 /* Check list */
 .check-list { margin-top: 16px; }
-.check-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  margin-bottom: 12px;
-}
+.check-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; }
 .check-icon {
-  flex-shrink: 0;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  margin-top: 1px;
+  flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; font-size: 12px; margin-top: 1px;
 }
 .check-icon.blue { background: rgba(52,152,219,0.15); color: var(--blue); }
 .check-icon.green { background: rgba(39,174,96,0.15); color: var(--green); }
 .check-item span { font-size: 14px; color: #C9D1D9; line-height: 1.4; }
 
 /* Compare boxes */
-.compare-row {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-}
-.compare-box {
-  flex: 1 1 200px;
-  border-radius: 16px;
-  padding: 20px;
-  text-align: center;
-}
+.compare-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
+.compare-box { flex: 1 1 200px; border-radius: 16px; padding: 20px; text-align: center; }
 .compare-box.before { background: rgba(231,76,60,0.06); border: 1px solid rgba(231,76,60,0.2); }
 .compare-box.after { background: rgba(39,174,96,0.06); border: 1px solid rgba(39,174,96,0.2); }
-.compare-label {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  margin-bottom: 10px;
-}
-.compare-price {
-  font-size: 28px;
-  font-weight: 800;
-  margin-top: 6px;
-}
-.compare-desc {
-  font-size: 12px;
-  color: var(--text-muted);
-  margin-top: 4px;
-}
+.compare-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; margin-bottom: 10px; }
+.compare-price { font-size: 28px; font-weight: 800; margin-top: 6px; }
+.compare-desc { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
 
 /* Photo cards */
-.photo-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  width: 100%;
-  max-width: 680px;
-  margin-bottom: 20px;
-}
-@media (max-width: 540px) {
-  .photo-grid { grid-template-columns: 1fr; }
-}
-.photo-card {
-  border-radius: 16px;
-  overflow: hidden;
-  border: 2px solid var(--border);
-  background: var(--bg-mid);
-}
-.photo-card img {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
-  display: block;
-}
-.photo-card-body {
-  padding: 16px;
-}
-.photo-card-title {
-  font-size: 15px;
-  font-weight: 700;
-  margin-bottom: 4px;
-}
-.photo-card-desc {
-  font-size: 12px;
-  color: var(--text-muted);
-  line-height: 1.4;
-}
-.ad-type-badge {
-  display: inline-block;
-  padding: 3px 10px;
-  border-radius: 8px;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  margin-bottom: 8px;
-}
+.photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; width: 100%; max-width: 680px; margin-bottom: 20px; }
+@media (max-width: 540px) { .photo-grid { grid-template-columns: 1fr; } }
+.photo-card { border-radius: 16px; overflow: hidden; border: 2px solid var(--border); background: var(--bg-mid); }
+.photo-card img { width: 100%; height: 220px; object-fit: cover; display: block; }
+.photo-card-body { padding: 16px; }
+.photo-card-title { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+.photo-card-desc { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+.ad-type-badge { display: inline-block; padding: 3px 10px; border-radius: 8px; font-size: 10px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 8px; }
 
 /* Supplied items */
-.items-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 12px;
-  width: 100%;
-  max-width: 680px;
-}
+.items-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; width: 100%; max-width: 680px; }
 .item-card {
   background: linear-gradient(135deg, rgba(22,27,34,0.9), rgba(30,36,44,0.9));
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 20px 14px;
-  text-align: center;
+  border: 1px solid var(--border); border-radius: 16px; padding: 20px 14px; text-align: center;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.item-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-}
+.item-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
 .item-icon {
-  width: 56px;
-  height: 56px;
+  width: 56px; height: 56px;
   background: linear-gradient(135deg, rgba(247,183,49,0.1), rgba(230,126,34,0.1));
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 10px;
-  font-size: 26px;
-  border: 1px dashed rgba(247,183,49,0.25);
+  border-radius: 14px; display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 10px; font-size: 26px; border: 1px dashed rgba(247,183,49,0.25);
 }
-.item-label {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: 3px;
-}
-.item-desc {
-  font-size: 11px;
-  color: var(--text-muted);
-  line-height: 1.3;
-}
+.item-label { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+.item-desc { font-size: 11px; color: var(--text-muted); line-height: 1.3; }
 
 /* Advertiser channels */
-.channels-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-@media (max-width: 480px) {
-  .channels-grid { grid-template-columns: 1fr; }
-}
-.channel-card {
-  border-radius: 14px;
-  padding: 16px;
-  text-align: center;
-}
+.channels-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+@media (max-width: 480px) { .channels-grid { grid-template-columns: 1fr; } }
+.channel-card { border-radius: 14px; padding: 16px; text-align: center; }
 .channel-card.offline { background: rgba(230,126,34,0.06); border: 1px solid rgba(230,126,34,0.2); }
 .channel-card.online { background: rgba(52,152,219,0.06); border: 1px solid rgba(52,152,219,0.2); }
 .channel-emoji { font-size: 28px; margin-bottom: 6px; }
@@ -368,58 +294,28 @@ html, body {
 /* Ideal biz tags */
 .biz-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; justify-content: center; }
 .biz-tag {
-  background: rgba(247,183,49,0.1);
-  border: 1px solid rgba(247,183,49,0.25);
-  border-radius: 8px;
-  padding: 5px 12px;
-  font-size: 12px;
-  color: var(--gold);
-  font-weight: 600;
+  background: rgba(247,183,49,0.1); border: 1px solid rgba(247,183,49,0.25);
+  border-radius: 8px; padding: 5px 12px; font-size: 12px; color: var(--gold); font-weight: 600;
 }
 
 /* CTA */
 .cta-btn {
-  display: inline-block;
-  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-  border-radius: 14px;
-  padding: 16px 40px;
-  box-shadow: 0 6px 24px var(--gold-glow);
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--bg-light);
-  border: none;
-  cursor: pointer;
-  text-decoration: none;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: inline-block; background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border-radius: 14px; padding: 16px 40px; box-shadow: 0 6px 24px var(--gold-glow);
+  font-size: 16px; font-weight: 700; color: var(--bg-light); border: none; cursor: pointer;
+  text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.cta-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 36px var(--gold-glow);
-}
+.cta-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 36px var(--gold-glow); }
 
 /* Moment box */
 .moment-box {
-  background: rgba(39,174,96,0.06);
-  border-radius: 16px;
-  padding: 20px;
-  text-align: center;
-  margin-bottom: 20px;
-  border: 1px dashed rgba(39,174,96,0.3);
+  background: rgba(39,174,96,0.06); border-radius: 16px; padding: 20px;
+  text-align: center; margin-bottom: 20px; border: 1px dashed rgba(39,174,96,0.3);
 }
 
 /* Slide backgrounds */
 .slide:nth-child(odd) { background: linear-gradient(145deg, var(--bg) 0%, var(--bg-mid) 50%, var(--bg-light) 100%); }
 .slide:nth-child(even) { background: linear-gradient(145deg, var(--bg-light) 0%, var(--bg-mid) 50%, var(--bg) 100%); }
-
-/* Footer link */
-.footer-link {
-  font-size: 12px;
-  color: var(--text-muted);
-  text-decoration: none;
-  margin-top: 16px;
-  display: inline-block;
-}
-.footer-link:hover { color: var(--gold); }
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(12px); }
@@ -428,7 +324,7 @@ html, body {
 
 /* iPad-optimized spacing */
 @media (min-width: 768px) and (max-width: 1366px) {
-  .slide { padding: 48px 64px; }
+  .slide { padding: 48px 64px; padding-top: 64px; }
   .content-card { max-width: 720px; padding: 40px; }
   .photo-card img { height: 260px; }
   .items-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
@@ -436,318 +332,422 @@ html, body {
   .section-subtitle { font-size: 16px; }
 }
 
-/* Small phone adjustments */
+/* Small phone */
 @media (max-width: 380px) {
-  .slide { padding: 24px 16px; }
+  .slide { padding: 24px 16px; padding-top: 56px; }
   .content-card { padding: 20px; }
   .audience-btn { min-width: 160px; padding: 18px 24px; }
 }
 </style>
 </head>
 <body>
-
-<!-- Navigation dots -->
-<div class="nav-dots" id="navDots"></div>
-
-<div class="slideshow" id="slideshow">
-
-  <!-- SLIDE 1: Hero -->
-  <div class="slide" id="slide-0">
-    <div class="badge">MadBud.dk</div>
-    <h1 class="hero-title">Bliv Partner</h1>
-    <p style="font-size:16px; color:var(--text-muted); text-align:center; max-width:520px; line-height:1.6; margin-bottom:8px;">
-      Pizzabakker og emballage med lokale annoncer indeni.<br>
-      Restauranter sparer penge. Annoncorer nar lokale kunder.
-    </p>
-    <div class="audience-row">
-      <a href="#slide-1" class="audience-btn restaurant" onclick="goSlide(1)">
-        <div class="audience-emoji">&#x1F355;</div>
-        <div class="audience-label">For Restauranter</div>
-        <div class="audience-desc">Billigere eller gratis emballage</div>
-      </a>
-      <a href="#slide-3" class="audience-btn advertiser" onclick="goSlide(3)">
-        <div class="audience-emoji">&#x1F4E2;</div>
-        <div class="audience-label">For Annoncorer</div>
-        <div class="audience-desc">Hyper-lokal annoncering</div>
-      </a>
-    </div>
-    <div class="swipe-hint">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8B949E" stroke-width="2" stroke-linecap="round"><polyline points="6,9 12,15 18,9"/></svg>
-      <span>Swipe</span>
-    </div>
-  </div>
-
-  <!-- SLIDE 2: For Restaurants -->
-  <div class="slide" id="slide-1">
-    <div class="content-card card-blue">
-      <div style="font-size:36px; margin-bottom:12px;">&#x1F355;</div>
-      <h2 class="section-title" style="color:var(--blue);">For Din Restaurant</h2>
-      <p class="section-subtitle">
-        Samme kvalitetsemballage som du allerede kober &mdash; men billigere eller helt gratis.
-        Annonceindtaegter betaler for dine bakker.
-      </p>
-
-      <div class="compare-row">
-        <div class="compare-box before">
-          <div class="compare-label" style="color:var(--red);">FOR</div>
-          <svg viewBox="0 0 80 80" width="60" height="60"><rect x="10" y="25" width="60" height="40" rx="4" fill="#D4A574" stroke="#8B6914" stroke-width="2"/><polygon points="10,25 20,10 70,10 70,25" fill="#E8C9A0" stroke="#8B6914" stroke-width="2"/></svg>
-          <div class="compare-price" style="color:var(--red);">Fuld Pris</div>
-          <div class="compare-desc">Standard blank emballage</div>
-        </div>
-        <div class="compare-box after">
-          <div class="compare-label" style="color:var(--green);">MED MADBUD</div>
-          <svg viewBox="0 0 80 80" width="60" height="60"><rect x="10" y="25" width="60" height="40" rx="4" fill="#D4A574" stroke="#8B6914" stroke-width="2"/><polygon points="10,25 20,10 70,10 70,25" fill="#E8C9A0" stroke="#8B6914" stroke-width="2"/><rect x="18" y="32" width="44" height="26" rx="2" fill="#FFF8E7" stroke="#C9A86C" stroke-width="1"/><rect x="22" y="36" width="36" height="8" rx="1" fill="#3498DB" opacity="0.7"/><text x="40" y="43" text-anchor="middle" font-size="5" font-weight="bold" fill="white">AD</text></svg>
-          <div class="compare-price" style="color:var(--green);">Billigere!</div>
-          <div class="compare-desc">Annoncer betaler for emballagen</div>
-        </div>
-      </div>
-
-      <div class="check-list">
-        <div style="font-size:13px; font-weight:700; color:var(--blue); margin-bottom:12px;">HVORFOR RESTAURANTER ELSKER DET:</div>
-        <div class="check-item"><div class="check-icon blue">&#x2713;</div><span>Samme kvalitet pizzabakker og fodevareemballage</span></div>
-        <div class="check-item"><div class="check-icon blue">&#x2713;</div><span>Lavere pris &mdash; annoncer betaler en del af prisen</span></div>
-        <div class="check-item"><div class="check-icon blue">&#x2713;</div><span>Ingen konkurrent-annoncer &mdash; kun komplementaere lokale virksomheder</span></div>
-        <div class="check-item"><div class="check-icon blue">&#x2713;</div><span>Kunder opdager lokale steder &mdash; tilfojer vaerdi til maaltidsoplevelsen</span></div>
-        <div class="check-item"><div class="check-icon blue">&#x2713;</div><span>Intet ekstra arbejde for dit personale</span></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 3: Product Photos -->
-  <div class="slide" id="slide-2">
-    <div style="text-align:center; margin-bottom:20px; max-width:680px;">
-      <div class="badge">PRODUKTER</div>
-      <h2 class="section-title" style="color:var(--orange);">Annoncepladser</h2>
-      <p class="section-subtitle" style="margin-bottom:16px;">To annonceformater &mdash; vaelg det der passer din kampagne.</p>
-    </div>
-
-    <div class="photo-grid">
-      <div class="photo-card">
-        <img src="./closedpizza.png" alt="Pizzabakke med restaurantens branding pa toppen">
-        <div class="photo-card-body">
-          <div class="ad-type-badge" style="background:rgba(230,126,34,0.12); color:var(--orange); border:1px solid rgba(230,126,34,0.3);">3x3 GITTER &mdash; 8 PLADSER</div>
-          <div class="photo-card-title" style="color:var(--orange);">Toppen af Bakken</div>
-          <div class="photo-card-desc">
-            Otte annoncepladser i et gitter pa bakkens top. Restaurantens eget logo i midten.
-            Ideel til flere lokale annoncorer der deler synligheden.
-          </div>
-        </div>
-      </div>
-      <div class="photo-card">
-        <img src="./openbox.png" alt="Aben pizzabakke med fuld annonce i laget">
-        <div class="photo-card-body">
-          <div class="ad-type-badge" style="background:rgba(39,174,96,0.12); color:var(--green); border:1px solid rgba(39,174,96,0.3);">FULD ANNONCEPLADS</div>
-          <div class="photo-card-title" style="color:var(--green);">Indeni Laget</div>
-          <div class="photo-card-desc">
-            En enkelt annoncor overtager hele indersiden af laget.
-            Garanteret opmaerksomhed i det ojeblik kunden abner bakken.
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div style="max-width:680px; text-align:center;">
-      <p style="font-size:12px; color:var(--text-muted); line-height:1.5;">
-        Alle annoncer trykkes i fuld farve pa FSC-certificeret, genanvendeligt materiale.
-        QR-koder og rabatkuponer kan integreres.
-      </p>
-    </div>
-  </div>
-
-  <!-- SLIDE 4: For Advertisers -->
-  <div class="slide" id="slide-3">
-    <div class="content-card card-green">
-      <div style="font-size:36px; margin-bottom:12px;">&#x1F4E2;</div>
-      <h2 class="section-title" style="color:var(--green);">For Lokale Annoncorer</h2>
-      <p class="section-subtitle">
-        Na rigtige, naerliggende kunder pa tvaers af online og offline kanaler &mdash;
-        fra pizzabakker til app-platforme.
-      </p>
-
-      <div class="moment-box">
-        <div style="font-size:36px; margin-bottom:8px;">&#x1F4E6; &#x27A1; &#x1F355; &#x27A1; &#x1F440;</div>
-        <p style="font-size:14px; color:var(--green); font-weight:600; margin:0 0 4px;">Det &ldquo;Abn Bakken&rdquo; Ojeblik</p>
-        <p style="font-size:12px; color:var(--text-muted); margin:0;">
-          Kunden abner pizzaen &rarr; ser din annonce i laget &rarr; garanteret opmaerksomhed i 20+ minutter
-        </p>
-      </div>
-
-      <div class="channels-grid">
-        <div class="channel-card offline">
-          <div class="channel-emoji">&#x1F4E6;</div>
-          <div class="channel-title" style="color:var(--orange);">Offline Kanaler</div>
-          <div class="channel-list">
-            Pizzabakker &bull; Burgerboxe<br>
-            Papirposer &bull; Servietter<br>
-            Indpakningspapir
-          </div>
-        </div>
-        <div class="channel-card online">
-          <div class="channel-emoji">&#x1F4F1;</div>
-          <div class="channel-title" style="color:var(--blue);">Online Kanaler</div>
-          <div class="channel-list">
-            MadBud App &bull; Webside<br>
-            Restaurant Dashboard<br>
-            Push-notifikationer
-          </div>
-        </div>
-      </div>
-
-      <div class="check-list">
-        <div style="font-size:13px; font-weight:700; color:var(--green); margin-bottom:12px;">HVORFOR LOKALE VIRKSOMHEDER ELSKER DET:</div>
-        <div class="check-item"><div class="check-icon green">&#x2713;</div><span>Hyper-lokal malretning &mdash; dit faktiske nabolag</span></div>
-        <div class="check-item"><div class="check-icon green">&#x2713;</div><span>Fangen malgruppe &mdash; folk sidder og spiser i 20+ min</span></div>
-        <div class="check-item"><div class="check-icon green">&#x2713;</div><span>Overkommelige annoncepriser for sma virksomheder</span></div>
-        <div class="check-item"><div class="check-icon green">&#x2713;</div><span>Fysisk annonce &mdash; ingen ad-blockere, ingen scrolling forbi</span></div>
-      </div>
-
-      <div style="text-align:center; margin-top:16px;">
-        <div style="font-size:12px; font-weight:700; color:var(--gold); margin-bottom:8px;">IDEELLE ANNONCORER:</div>
-        <div class="biz-tags">
-          <span class="biz-tag">Frisorer</span>
-          <span class="biz-tag">Fitnesscentre</span>
-          <span class="biz-tag">Autovaerksted</span>
-          <span class="biz-tag">Tandlaeger</span>
-          <span class="biz-tag">Dyrebutikker</span>
-          <span class="biz-tag">Blomsterhandlere</span>
-          <span class="biz-tag">Undervisning</span>
-          <span class="biz-tag">Yoga Studios</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 5: Other Supplied Items -->
-  <div class="slide" id="slide-4">
-    <div style="text-align:center; margin-bottom:24px;">
-      <div class="badge">SORTIMENT</div>
-      <h2 class="section-title" style="color:var(--gold);">Alt Vi Leverer</h2>
-      <p class="section-subtitle">Komplet emballagelosning med annonceplads &mdash; alt i et.</p>
-    </div>
-
-    <div class="items-grid">
-      <div class="item-card">
-        <div class="item-icon">&#x1F355;</div>
-        <div class="item-label">Pizzabakker</div>
-        <div class="item-desc">26cm &ndash; 50cm, med annoncepaneler</div>
-      </div>
-      <div class="item-card">
-        <div class="item-icon">&#x1F354;</div>
-        <div class="item-label">Burgerbokse</div>
-        <div class="item-desc">Clamshell med annonce i laget</div>
-      </div>
-      <div class="item-card">
-        <div class="item-icon">&#x1F32F;</div>
-        <div class="item-label">Wrap-bokse</div>
-        <div class="item-desc">Sturdy emballage til wraps og ruller</div>
-      </div>
-      <div class="item-card">
-        <div class="item-icon">&#x1F9FB;</div>
-        <div class="item-label">Servietter</div>
-        <div class="item-desc">Trykte servietter med lokale annoncer</div>
-      </div>
-      <div class="item-card">
-        <div class="item-icon">&#x1F961;</div>
-        <div class="item-label">Papirposer</div>
-        <div class="item-desc">Takeaway-poser med annoncetryk</div>
-      </div>
-      <div class="item-card">
-        <div class="item-icon">&#x1F956;</div>
-        <div class="item-label">Indpakningspapir</div>
-        <div class="item-desc">Fedtafvisende papir med lokale tilbud</div>
-      </div>
-      <div class="item-card">
-        <div class="item-icon">&#x2615;</div>
-        <div class="item-label">Drikkekrus</div>
-        <div class="item-desc">Papirkrus med annonceplads</div>
-      </div>
-      <div class="item-card">
-        <div class="item-icon">&#x1F962;</div>
-        <div class="item-label">Spisepinde &amp; Bestik</div>
-        <div class="item-desc">Branded emballage til bestik</div>
-      </div>
-      <div class="item-card">
-        <div class="item-icon">&#x267B;&#xFE0F;</div>
-        <div class="item-label">Oko-materialer</div>
-        <div class="item-desc">FSC-certificeret, 100% genanvendeligt</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 6: Contact CTA -->
-  <div class="slide" id="slide-5">
-    <div style="text-align:center; max-width:500px;">
-      <div style="font-size:56px; margin-bottom:20px;">&#x1F91D;</div>
-      <h2 class="hero-title" style="margin-bottom:16px;">Lad os snakke</h2>
-      <p style="font-size:15px; color:var(--text-muted); line-height:1.6; margin-bottom:32px;">
-        Uanset om du er restaurant eller annoncor &mdash;
-        vi finder den rigtige losning til dig.
-      </p>
-      <a href="mailto:info@madbud.dk" class="cta-btn" style="font-size:17px;">
-        &#x1F7E2; info@madbud.dk
-      </a>
-      <p style="font-size:11px; color:#484F58; margin-top:24px;">
-        MadBud.dk &copy; 2026 &mdash; Smart Emballage, Smartere Annoncering
-      </p>
-    </div>
-  </div>
-
-</div>
-
 <script>
-const slideshow = document.getElementById('slideshow');
-const slides = document.querySelectorAll('.slide');
-const dotsContainer = document.getElementById('navDots');
-const TOTAL = slides.length;
+const T = {
+  en: {
+    flag: "\u{1F1EC}\u{1F1E7}", label: "English",
+    hero: { title: "Become a Partner", desc: "Pizza boxes and packaging with local ads inside.<br>Restaurants save money. Advertisers reach local customers.", btnRestLabel: "For Restaurants", btnRestDesc: "Cheaper or free packaging", btnAdvLabel: "For Advertisers", btnAdvDesc: "Hyper-local advertising", swipe: "Swipe" },
+    rest: {
+      title: "For Your Restaurant",
+      subtitle: "The same quality packaging you already buy \u2014 but cheaper or completely free. Ad revenue pays for your boxes.",
+      before: "BEFORE", after: "WITH MADBUD", beforePrice: "Full Price", beforeDesc: "Standard blank packaging", afterPrice: "Cheaper!", afterDesc: "Ads pay for the packaging",
+      whyTitle: "WHY RESTAURANTS LOVE IT:",
+      whyItems: ["Same quality pizza boxes and food packaging","Lower price \u2014 ads pay part of the cost","No competitor ads \u2014 only complementary local businesses","Customers discover local spots \u2014 adds value to the meal experience","No extra work for your staff"]
+    },
+    products: {
+      badge: "PRODUCTS", title: "Ad Placements", subtitle: "Two ad formats \u2014 choose what fits your campaign.",
+      gridBadge: "3\u00D73 GRID \u2014 8 SLOTS", gridTitle: "Top of the Box", gridDesc: "Eight ad slots in a grid on the box top. Restaurant\u2019s own logo in the center. Ideal for multiple local advertisers sharing visibility.",
+      fullBadge: "FULL AD SPACE", fullTitle: "Inside the Lid", fullDesc: "A single advertiser takes over the entire inside of the lid. Guaranteed attention the moment the customer opens the box.",
+      note: "All ads printed in full color on FSC-certified, recyclable material. QR codes and discount coupons can be integrated."
+    },
+    adv: {
+      title: "For Local Advertisers",
+      subtitle: "Reach real, nearby customers across online and offline channels \u2014 from pizza boxes to app platforms.",
+      momentEmoji: "\u{1F4E6} \u27A1 \u{1F355} \u27A1 \u{1F440}",
+      momentTitle: 'The \u201COpen the Box\u201D Moment',
+      momentDesc: "Customer opens the pizza \u2192 sees your ad in the lid \u2192 guaranteed attention for 20+ minutes",
+      offlineTitle: "Offline Channels", offlineList: "Pizza boxes \u2022 Burger boxes<br>Paper bags \u2022 Napkins<br>Wrapping paper",
+      onlineTitle: "Online Channels", onlineList: "MadBud App \u2022 Website<br>Restaurant Dashboard<br>Push notifications",
+      whyTitle: "WHY LOCAL BUSINESSES LOVE IT:",
+      whyItems: ["Hyper-local targeting \u2014 your actual neighborhood","Captive audience \u2014 people sit and eat for 20+ min","Affordable ad rates for small businesses","Physical ad \u2014 no ad blockers, no scrolling past"],
+      idealTitle: "IDEAL ADVERTISERS:",
+      idealBiz: ["Hair Salons","Gyms","Auto Repair","Dentists","Pet Shops","Florists","Tutoring","Yoga Studios"]
+    },
+    items: {
+      badge: "RANGE", title: "Everything We Supply", subtitle: "Complete packaging solution with ad space \u2014 all in one.",
+      list: [
+        { emoji: "\u{1F355}", name: "Pizza Boxes", desc: "26cm \u2013 50cm, with ad panels" },
+        { emoji: "\u{1F354}", name: "Burger Boxes", desc: "Clamshell with ad in the lid" },
+        { emoji: "\u{1F32F}", name: "Wrap Boxes", desc: "Sturdy packaging for wraps and rolls" },
+        { emoji: "\u{1F9FB}", name: "Napkins", desc: "Printed napkins with local ads" },
+        { emoji: "\u{1F961}", name: "Paper Bags", desc: "Takeaway bags with ad print" },
+        { emoji: "\u{1F956}", name: "Wrapping Paper", desc: "Grease-proof paper with local offers" },
+        { emoji: "\u2615", name: "Paper Cups", desc: "Cups with ad space" },
+        { emoji: "\u{1F962}", name: "Cutlery", desc: "Branded cutlery packaging" },
+        { emoji: "\u267B\uFE0F", name: "Eco Materials", desc: "FSC-certified, 100% recyclable" }
+      ]
+    },
+    cta: { title: "Let\u2019s Talk", desc: "Whether you\u2019re a restaurant or advertiser \u2014 we\u2019ll find the right solution for you.", btn: "\u{1F7E2} info@madbud.dk", footer: "MadBud.dk \u00A9 2026 \u2014 Smart Packaging, Smarter Advertising" }
+  },
+  da: {
+    flag: "\u{1F1E9}\u{1F1F0}", label: "Dansk",
+    hero: { title: "Bliv Partner", desc: "Pizzabakker og emballage med lokale annoncer indeni.<br>Restauranter sparer penge. Annoncører når lokale kunder.", btnRestLabel: "For Restauranter", btnRestDesc: "Billigere eller gratis emballage", btnAdvLabel: "For Annoncører", btnAdvDesc: "Hyper-lokal annoncering", swipe: "Swipe" },
+    rest: {
+      title: "For Din Restaurant",
+      subtitle: "Samme kvalitetsemballage som du allerede køber \u2014 men billigere eller helt gratis. Annonceindtægter betaler for dine bakker.",
+      before: "FØR", after: "MED MADBUD", beforePrice: "Fuld Pris", beforeDesc: "Standard blank emballage", afterPrice: "Billigere!", afterDesc: "Annoncer betaler for emballagen",
+      whyTitle: "HVORFOR RESTAURANTER ELSKER DET:",
+      whyItems: ["Samme kvalitet pizzabakker og fødevareemballage","Lavere pris \u2014 annoncer betaler en del af prisen","Ingen konkurrent-annoncer \u2014 kun komplementære lokale virksomheder","Kunder opdager lokale steder \u2014 tilføjer værdi til måltidsoplevelsen","Intet ekstra arbejde for dit personale"]
+    },
+    products: {
+      badge: "PRODUKTER", title: "Annoncepladser", subtitle: "To annonceformater \u2014 vælg det der passer din kampagne.",
+      gridBadge: "3\u00D73 GITTER \u2014 8 PLADSER", gridTitle: "Toppen af Bakken", gridDesc: "Otte annoncepladser i et gitter på bakkens top. Restaurantens eget logo i midten. Ideel til flere lokale annoncører der deler synligheden.",
+      fullBadge: "FULD ANNONCEPLADS", fullTitle: "Indeni Låget", fullDesc: "En enkelt annoncør overtager hele indersiden af låget. Garanteret opmærksomhed i det øjeblik kunden åbner bakken.",
+      note: "Alle annoncer trykkes i fuld farve på FSC-certificeret, genanvendeligt materiale. QR-koder og rabatkuponer kan integreres."
+    },
+    adv: {
+      title: "For Lokale Annoncører",
+      subtitle: "Nå rigtige, nærliggende kunder på tværs af online og offline kanaler \u2014 fra pizzabakker til app-platforme.",
+      momentEmoji: "\u{1F4E6} \u27A1 \u{1F355} \u27A1 \u{1F440}",
+      momentTitle: 'Det \u201CÅbn Bakken\u201D Øjeblik',
+      momentDesc: "Kunden åbner pizzaen \u2192 ser din annonce i låget \u2192 garanteret opmærksomhed i 20+ minutter",
+      offlineTitle: "Offline Kanaler", offlineList: "Pizzabakker \u2022 Burgerboxe<br>Papirposer \u2022 Servietter<br>Indpakningspapir",
+      onlineTitle: "Online Kanaler", onlineList: "MadBud App \u2022 Webside<br>Restaurant Dashboard<br>Push-notifikationer",
+      whyTitle: "HVORFOR LOKALE VIRKSOMHEDER ELSKER DET:",
+      whyItems: ["Hyper-lokal målretning \u2014 dit faktiske nabolag","Fangen målgruppe \u2014 folk sidder og spiser i 20+ min","Overkommelige annoncepriser for små virksomheder","Fysisk annonce \u2014 ingen ad-blockere, ingen scrolling forbi"],
+      idealTitle: "IDEELLE ANNONCØRER:",
+      idealBiz: ["Frisører","Fitnesscentre","Autoværksted","Tandlæger","Dyrebutikker","Blomsterhandlere","Undervisning","Yoga Studios"]
+    },
+    items: {
+      badge: "SORTIMENT", title: "Alt Vi Leverer", subtitle: "Komplet emballageløsning med annonceplads \u2014 alt i ét.",
+      list: [
+        { emoji: "\u{1F355}", name: "Pizzabakker", desc: "26cm \u2013 50cm, med annoncepaneler" },
+        { emoji: "\u{1F354}", name: "Burgerbokse", desc: "Clamshell med annonce i låget" },
+        { emoji: "\u{1F32F}", name: "Wrap-bokse", desc: "Robust emballage til wraps og ruller" },
+        { emoji: "\u{1F9FB}", name: "Servietter", desc: "Trykte servietter med lokale annoncer" },
+        { emoji: "\u{1F961}", name: "Papirposer", desc: "Takeaway-poser med annoncetryk" },
+        { emoji: "\u{1F956}", name: "Indpakningspapir", desc: "Fedtafvisende papir med lokale tilbud" },
+        { emoji: "\u2615", name: "Drikkekrus", desc: "Papirkrus med annonceplads" },
+        { emoji: "\u{1F962}", name: "Spisepinde & Bestik", desc: "Branded emballage til bestik" },
+        { emoji: "\u267B\uFE0F", name: "Øko-materialer", desc: "FSC-certificeret, 100% genanvendeligt" }
+      ]
+    },
+    cta: { title: "Lad os snakke", desc: "Uanset om du er restaurant eller annoncør \u2014 vi finder den rigtige løsning til dig.", btn: "\u{1F7E2} info@madbud.dk", footer: "MadBud.dk \u00A9 2026 \u2014 Smart Emballage, Smartere Annoncering" }
+  },
+  tr: {
+    flag: "\u{1F1F9}\u{1F1F7}", label: "Türkçe",
+    hero: { title: "Partner Olun", desc: "İçinde yerel reklamlar bulunan pizza kutuları ve ambalajlar.<br>Restoranlar tasarruf eder. Reklamverenler yerel müşterilere ulaşır.", btnRestLabel: "Restoranlar İçin", btnRestDesc: "Daha ucuz veya ücretsiz ambalaj", btnAdvLabel: "Reklamverenler İçin", btnAdvDesc: "Hiper-yerel reklam", swipe: "Kaydır" },
+    rest: {
+      title: "Restoranınız İçin",
+      subtitle: "Zaten aldığınız kalitede ambalaj \u2014 ama daha ucuz veya tamamen ücretsiz. Reklam gelirleri kutularınızı karşılar.",
+      before: "ÖNCE", after: "MADBUD İLE", beforePrice: "Tam Fiyat", beforeDesc: "Standart boş ambalaj", afterPrice: "Daha Ucuz!", afterDesc: "Reklamlar ambalajı karşılar",
+      whyTitle: "RESTORANLAR NEDEN SEVİYOR:",
+      whyItems: ["Aynı kalite pizza kutuları ve gıda ambalajı","Daha düşük fiyat \u2014 reklamlar maliyetin bir kısmını karşılar","Rakip reklamı yok \u2014 sadece tamamlayıcı yerel işletmeler","Müşteriler yerel mekanları keşfeder \u2014 yemek deneyimine değer katar","Personeliniz için ekstra iş yok"]
+    },
+    products: {
+      badge: "ÜRÜNLER", title: "Reklam Alanları", subtitle: "İki reklam formatı \u2014 kampanyanıza uygun olanı seçin.",
+      gridBadge: "3\u00D73 IZGARA \u2014 8 ALAN", gridTitle: "Kutunun Üstü", gridDesc: "Kutu üstünde ızgara düzeninde sekiz reklam alanı. Restoranın kendi logosu ortada. Birden fazla yerel reklamveren için ideal.",
+      fullBadge: "TAM REKLAM ALANI", fullTitle: "Kapağın İçi", fullDesc: "Tek bir reklamveren kapağın tüm iç yüzeyini kullanır. Müşteri kutuyu açtığı an garantili dikkat.",
+      note: "Tüm reklamlar FSC sertifikalı, geri dönüştürülebilir malzemeye tam renkli basılır. QR kodları ve indirim kuponları entegre edilebilir."
+    },
+    adv: {
+      title: "Yerel Reklamverenler İçin",
+      subtitle: "Online ve offline kanallarda gerçek, yakındaki müşterilere ulaşın \u2014 pizza kutularından uygulama platformlarına.",
+      momentEmoji: "\u{1F4E6} \u27A1 \u{1F355} \u27A1 \u{1F440}",
+      momentTitle: '\u201CKutuyu Aç\u201D Anı',
+      momentDesc: "Müşteri pizzayı açar \u2192 kapakta reklamınızı görür \u2192 20+ dakika garantili dikkat",
+      offlineTitle: "Offline Kanallar", offlineList: "Pizza kutuları \u2022 Burger kutuları<br>Kağıt poşetler \u2022 Peçeteler<br>Ambalaj kağıdı",
+      onlineTitle: "Online Kanallar", onlineList: "MadBud Uygulaması \u2022 Web sitesi<br>Restoran Paneli<br>Push bildirimleri",
+      whyTitle: "YEREL İŞLETMELER NEDEN SEVİYOR:",
+      whyItems: ["Hiper-yerel hedefleme \u2014 gerçek mahalleniz","Esir kitle \u2014 insanlar 20+ dakika oturup yemek yer","Küçük işletmeler için uygun fiyatlı reklam","Fiziksel reklam \u2014 reklam engelleyici yok, kaydırma yok"],
+      idealTitle: "İDEAL REKLAMVERENLER:",
+      idealBiz: ["Kuaförler","Spor Salonları","Oto Tamir","Diş Hekimleri","Pet Shoplar","Çiçekçiler","Özel Ders","Yoga Stüdyoları"]
+    },
+    items: {
+      badge: "ÜRÜN YELPAZESI", title: "Sunduğumuz Her Şey", subtitle: "Reklam alanı dahil komple ambalaj çözümü \u2014 hepsi bir arada.",
+      list: [
+        { emoji: "\u{1F355}", name: "Pizza Kutuları", desc: "26cm \u2013 50cm, reklam panelli" },
+        { emoji: "\u{1F354}", name: "Burger Kutuları", desc: "Kapakta reklam alanlı clamshell" },
+        { emoji: "\u{1F32F}", name: "Wrap Kutuları", desc: "Wrap ve rulo için sağlam ambalaj" },
+        { emoji: "\u{1F9FB}", name: "Peçeteler", desc: "Yerel reklamlı baskılı peçeteler" },
+        { emoji: "\u{1F961}", name: "Kağıt Poşetler", desc: "Reklam baskılı paket poşetleri" },
+        { emoji: "\u{1F956}", name: "Ambalaj Kağıdı", desc: "Yerel teklifli yağ geçirmez kağıt" },
+        { emoji: "\u2615", name: "Kağıt Bardaklar", desc: "Reklam alanlı bardaklar" },
+        { emoji: "\u{1F962}", name: "Çatal Bıçak", desc: "Markalı çatal bıçak ambalajı" },
+        { emoji: "\u267B\uFE0F", name: "Eko Malzemeler", desc: "FSC sertifikalı, %100 geri dönüşümlü" }
+      ]
+    },
+    cta: { title: "Konuşalım", desc: "Restoran ya da reklamveren olun \u2014 sizin için doğru çözümü bulalım.", btn: "\u{1F7E2} info@madbud.dk", footer: "MadBud.dk \u00A9 2026 \u2014 Akıllı Ambalaj, Daha Akıllı Reklam" }
+  },
+  ar: {
+    flag: "\u{1F1F8}\u{1F1E6}", label: "\u0627\u0644\u0639\u0631\u0628\u064A\u0629", rtl: true,
+    hero: { title: "\u0643\u0646 \u0634\u0631\u064A\u0643\u0627\u064B", desc: "\u0639\u0644\u0628 \u0628\u064A\u062A\u0632\u0627 \u0648\u062A\u063A\u0644\u064A\u0641 \u0645\u0639 \u0625\u0639\u0644\u0627\u0646\u0627\u062A \u0645\u062D\u0644\u064A\u0629 \u0628\u0627\u0644\u062F\u0627\u062E\u0644.<br>\u0627\u0644\u0645\u0637\u0627\u0639\u0645 \u062A\u0648\u0641\u0631 \u0627\u0644\u0645\u0627\u0644. \u0627\u0644\u0645\u0639\u0644\u0646\u0648\u0646 \u064A\u0635\u0644\u0648\u0646 \u0644\u0644\u0639\u0645\u0644\u0627\u0621 \u0627\u0644\u0645\u062D\u0644\u064A\u064A\u0646.", btnRestLabel: "\u0644\u0644\u0645\u0637\u0627\u0639\u0645", btnRestDesc: "\u062A\u063A\u0644\u064A\u0641 \u0623\u0631\u062E\u0635 \u0623\u0648 \u0645\u062C\u0627\u0646\u064A", btnAdvLabel: "\u0644\u0644\u0645\u0639\u0644\u0646\u064A\u0646", btnAdvDesc: "\u0625\u0639\u0644\u0627\u0646\u0627\u062A \u0645\u062D\u0644\u064A\u0629 \u0641\u0627\u0626\u0642\u0629", swipe: "\u0627\u0633\u062D\u0628" },
+    rest: {
+      title: "\u0644\u0645\u0637\u0639\u0645\u0643",
+      subtitle: "\u0646\u0641\u0633 \u062C\u0648\u062F\u0629 \u0627\u0644\u062A\u063A\u0644\u064A\u0641 \u0627\u0644\u062A\u064A \u062A\u0634\u062A\u0631\u064A\u0647\u0627 \u0628\u0627\u0644\u0641\u0639\u0644 \u2014 \u0644\u0643\u0646 \u0623\u0631\u062E\u0635 \u0623\u0648 \u0645\u062C\u0627\u0646\u064A\u0629 \u062A\u0645\u0627\u0645\u0627\u064B. \u0625\u064A\u0631\u0627\u062F\u0627\u062A \u0627\u0644\u0625\u0639\u0644\u0627\u0646\u0627\u062A \u062A\u062F\u0641\u0639 \u062B\u0645\u0646 \u0639\u0644\u0628\u0643.",
+      before: "\u0642\u0628\u0644", after: "\u0645\u0639 MADBUD", beforePrice: "\u0627\u0644\u0633\u0639\u0631 \u0627\u0644\u0643\u0627\u0645\u0644", beforeDesc: "\u062A\u063A\u0644\u064A\u0641 \u0639\u0627\u062F\u064A \u0641\u0627\u0631\u063A", afterPrice: "\u0623\u0631\u062E\u0635!", afterDesc: "\u0627\u0644\u0625\u0639\u0644\u0627\u0646\u0627\u062A \u062A\u062F\u0641\u0639 \u062B\u0645\u0646 \u0627\u0644\u062A\u063A\u0644\u064A\u0641",
+      whyTitle: "\u0644\u0645\u0627\u0630\u0627 \u062A\u062D\u0628 \u0627\u0644\u0645\u0637\u0627\u0639\u0645 \u0630\u0644\u0643:",
+      whyItems: ["\u0646\u0641\u0633 \u062C\u0648\u062F\u0629 \u0639\u0644\u0628 \u0627\u0644\u0628\u064A\u062A\u0632\u0627 \u0648\u062A\u063A\u0644\u064A\u0641 \u0627\u0644\u0637\u0639\u0627\u0645","\u0633\u0639\u0631 \u0623\u0642\u0644 \u2014 \u0627\u0644\u0625\u0639\u0644\u0627\u0646\u0627\u062A \u062A\u062F\u0641\u0639 \u062C\u0632\u0621\u0627\u064B \u0645\u0646 \u0627\u0644\u062A\u0643\u0644\u0641\u0629","\u0644\u0627 \u0625\u0639\u0644\u0627\u0646\u0627\u062A \u0645\u0646\u0627\u0641\u0633\u0629 \u2014 \u0641\u0642\u0637 \u0623\u0639\u0645\u0627\u0644 \u0645\u062D\u0644\u064A\u0629 \u0645\u0643\u0645\u0644\u0629","\u0627\u0644\u0639\u0645\u0644\u0627\u0621 \u064A\u0643\u062A\u0634\u0641\u0648\u0646 \u0623\u0645\u0627\u0643\u0646 \u0645\u062D\u0644\u064A\u0629 \u2014 \u0642\u064A\u0645\u0629 \u0645\u0636\u0627\u0641\u0629 \u0644\u062A\u062C\u0631\u0628\u0629 \u0627\u0644\u0648\u062C\u0628\u0629","\u0644\u0627 \u0639\u0645\u0644 \u0625\u0636\u0627\u0641\u064A \u0644\u0637\u0627\u0642\u0645\u0643"]
+    },
+    products: {
+      badge: "\u0627\u0644\u0645\u0646\u062A\u062C\u0627\u062A", title: "\u0645\u0633\u0627\u062D\u0627\u062A \u0625\u0639\u0644\u0627\u0646\u064A\u0629", subtitle: "\u0634\u0643\u0644\u0627\u0646 \u0644\u0644\u0625\u0639\u0644\u0627\u0646 \u2014 \u0627\u062E\u062A\u0631 \u0645\u0627 \u064A\u0646\u0627\u0633\u0628 \u062D\u0645\u0644\u062A\u0643.",
+      gridBadge: "\u0634\u0628\u0643\u0629 3\u00D73 \u2014 8 \u0645\u0648\u0627\u0642\u0639", gridTitle: "\u0623\u0639\u0644\u0649 \u0627\u0644\u0639\u0644\u0628\u0629", gridDesc: "\u062B\u0645\u0627\u0646\u064A\u0629 \u0645\u0648\u0627\u0642\u0639 \u0625\u0639\u0644\u0627\u0646\u064A\u0629 \u0641\u064A \u0634\u0628\u0643\u0629 \u0639\u0644\u0649 \u0623\u0639\u0644\u0649 \u0627\u0644\u0639\u0644\u0628\u0629. \u0634\u0639\u0627\u0631 \u0627\u0644\u0645\u0637\u0639\u0645 \u0641\u064A \u0627\u0644\u0648\u0633\u0637. \u0645\u062B\u0627\u0644\u064A \u0644\u0639\u062F\u0629 \u0645\u0639\u0644\u0646\u064A\u0646 \u0645\u062D\u0644\u064A\u064A\u0646.",
+      fullBadge: "\u0645\u0633\u0627\u062D\u0629 \u0625\u0639\u0644\u0627\u0646\u064A\u0629 \u0643\u0627\u0645\u0644\u0629", fullTitle: "\u062F\u0627\u062E\u0644 \u0627\u0644\u063A\u0637\u0627\u0621", fullDesc: "\u0645\u0639\u0644\u0646 \u0648\u0627\u062D\u062F \u064A\u0633\u062A\u062E\u062F\u0645 \u0643\u0627\u0645\u0644 \u0627\u0644\u063A\u0637\u0627\u0621 \u0627\u0644\u062F\u0627\u062E\u0644\u064A. \u0627\u0646\u062A\u0628\u0627\u0647 \u0645\u0636\u0645\u0648\u0646 \u0644\u062D\u0638\u0629 \u0641\u062A\u062D \u0627\u0644\u0639\u0644\u0628\u0629.",
+      note: "\u062C\u0645\u064A\u0639 \u0627\u0644\u0625\u0639\u0644\u0627\u0646\u0627\u062A \u0645\u0637\u0628\u0648\u0639\u0629 \u0628\u0627\u0644\u0623\u0644\u0648\u0627\u0646 \u0627\u0644\u0643\u0627\u0645\u0644\u0629 \u0639\u0644\u0649 \u0645\u0648\u0627\u062F \u0645\u0639\u062A\u0645\u062F\u0629 FSC \u0642\u0627\u0628\u0644\u0629 \u0644\u0625\u0639\u0627\u062F\u0629 \u0627\u0644\u062A\u062F\u0648\u064A\u0631. \u064A\u0645\u0643\u0646 \u062F\u0645\u062C \u0631\u0645\u0648\u0632 QR \u0648\u0643\u0648\u0628\u0648\u0646\u0627\u062A \u062E\u0635\u0645."
+    },
+    adv: {
+      title: "\u0644\u0644\u0645\u0639\u0644\u0646\u064A\u0646 \u0627\u0644\u0645\u062D\u0644\u064A\u064A\u0646",
+      subtitle: "\u0627\u0648\u0635\u0644 \u0644\u0639\u0645\u0644\u0627\u0621 \u062D\u0642\u064A\u0642\u064A\u064A\u0646 \u0642\u0631\u064A\u0628\u064A\u0646 \u0639\u0628\u0631 \u0642\u0646\u0648\u0627\u062A \u0623\u0648\u0646\u0644\u0627\u064A\u0646 \u0648\u0623\u0648\u0641\u0644\u0627\u064A\u0646 \u2014 \u0645\u0646 \u0639\u0644\u0628 \u0627\u0644\u0628\u064A\u062A\u0632\u0627 \u0625\u0644\u0649 \u0645\u0646\u0635\u0627\u062A \u0627\u0644\u062A\u0637\u0628\u064A\u0642\u0627\u062A.",
+      momentEmoji: "\u{1F440} \u2B05 \u{1F355} \u2B05 \u{1F4E6}",
+      momentTitle: '\u0644\u062D\u0638\u0629 \u201C\u0641\u062A\u062D \u0627\u0644\u0639\u0644\u0628\u0629\u201D',
+      momentDesc: "\u0627\u0644\u0639\u0645\u064A\u0644 \u064A\u0641\u062A\u062D \u0627\u0644\u0628\u064A\u062A\u0632\u0627 \u2190 \u064A\u0631\u0649 \u0625\u0639\u0644\u0627\u0646\u0643 \u0641\u064A \u0627\u0644\u063A\u0637\u0627\u0621 \u2190 \u0627\u0646\u062A\u0628\u0627\u0647 \u0645\u0636\u0645\u0648\u0646 \u0644\u0623\u0643\u062B\u0631 \u0645\u0646 20 \u062F\u0642\u064A\u0642\u0629",
+      offlineTitle: "\u0642\u0646\u0648\u0627\u062A \u0623\u0648\u0641\u0644\u0627\u064A\u0646", offlineList: "\u0639\u0644\u0628 \u0628\u064A\u062A\u0632\u0627 \u2022 \u0639\u0644\u0628 \u0628\u0631\u063A\u0631<br>\u0623\u0643\u064A\u0627\u0633 \u0648\u0631\u0642\u064A\u0629 \u2022 \u0645\u0646\u0627\u062F\u064A\u0644<br>\u0648\u0631\u0642 \u062A\u063A\u0644\u064A\u0641",
+      onlineTitle: "\u0642\u0646\u0648\u0627\u062A \u0623\u0648\u0646\u0644\u0627\u064A\u0646", onlineList: "\u062A\u0637\u0628\u064A\u0642 MadBud \u2022 \u0627\u0644\u0645\u0648\u0642\u0639<br>\u0644\u0648\u062D\u0629 \u0627\u0644\u0645\u0637\u0639\u0645<br>\u0625\u0634\u0639\u0627\u0631\u0627\u062A \u0641\u0648\u0631\u064A\u0629",
+      whyTitle: "\u0644\u0645\u0627\u0630\u0627 \u062A\u062D\u0628 \u0627\u0644\u0634\u0631\u0643\u0627\u062A \u0627\u0644\u0645\u062D\u0644\u064A\u0629 \u0630\u0644\u0643:",
+      whyItems: ["\u0627\u0633\u062A\u0647\u062F\u0627\u0641 \u0645\u062D\u0644\u064A \u0641\u0627\u0626\u0642 \u2014 \u062D\u064A\u0651\u0643 \u0627\u0644\u0641\u0639\u0644\u064A","\u062C\u0645\u0647\u0648\u0631 \u0623\u0633\u064A\u0631 \u2014 \u0627\u0644\u0646\u0627\u0633 \u064A\u062C\u0644\u0633\u0648\u0646 \u0648\u064A\u0623\u0643\u0644\u0648\u0646 \u0644\u0623\u0643\u062B\u0631 \u0645\u0646 20 \u062F\u0642\u064A\u0642\u0629","\u0623\u0633\u0639\u0627\u0631 \u0625\u0639\u0644\u0627\u0646\u0627\u062A \u0645\u0639\u0642\u0648\u0644\u0629 \u0644\u0644\u0634\u0631\u0643\u0627\u062A \u0627\u0644\u0635\u063A\u064A\u0631\u0629","\u0625\u0639\u0644\u0627\u0646 \u0645\u0627\u062F\u064A \u2014 \u0644\u0627 \u062D\u0627\u0635\u0631\u0627\u062A \u0625\u0639\u0644\u0627\u0646\u0627\u062A\u060C \u0644\u0627 \u062A\u0645\u0631\u064A\u0631"],
+      idealTitle: "\u0627\u0644\u0645\u0639\u0644\u0646\u0648\u0646 \u0627\u0644\u0645\u062B\u0627\u0644\u064A\u0648\u0646:",
+      idealBiz: ["\u0635\u0627\u0644\u0648\u0646\u0627\u062A \u062A\u062C\u0645\u064A\u0644","\u0635\u0627\u0644\u0627\u062A \u0631\u064A\u0627\u0636\u0629","\u0648\u0631\u0634 \u0633\u064A\u0627\u0631\u0627\u062A","\u0623\u0637\u0628\u0627\u0621 \u0623\u0633\u0646\u0627\u0646","\u0645\u062A\u0627\u062C\u0631 \u062D\u064A\u0648\u0627\u0646\u0627\u062A","\u0628\u0627\u0626\u0639\u064A \u0632\u0647\u0648\u0631","\u062F\u0631\u0648\u0633 \u062E\u0635\u0648\u0635\u064A\u0629","\u0627\u0633\u062A\u0648\u062F\u064A\u0648\u0647\u0627\u062A \u064A\u0648\u063A\u0627"]
+    },
+    items: {
+      badge: "\u0627\u0644\u0645\u0646\u062A\u062C\u0627\u062A", title: "\u0643\u0644 \u0645\u0627 \u0646\u0642\u062F\u0645\u0647", subtitle: "\u062D\u0644 \u062A\u063A\u0644\u064A\u0641 \u0643\u0627\u0645\u0644 \u0645\u0639 \u0645\u0633\u0627\u062D\u0629 \u0625\u0639\u0644\u0627\u0646\u064A\u0629 \u2014 \u0627\u0644\u0643\u0644 \u0641\u064A \u0648\u0627\u062D\u062F.",
+      list: [
+        { emoji: "\u{1F355}", name: "\u0639\u0644\u0628 \u0628\u064A\u062A\u0632\u0627", desc: "26\u0633\u0645 \u2013 50\u0633\u0645\u060C \u0645\u0639 \u0644\u0648\u062D\u0627\u062A \u0625\u0639\u0644\u0627\u0646\u064A\u0629" },
+        { emoji: "\u{1F354}", name: "\u0639\u0644\u0628 \u0628\u0631\u063A\u0631", desc: "\u0645\u0639 \u0625\u0639\u0644\u0627\u0646 \u0641\u064A \u0627\u0644\u063A\u0637\u0627\u0621" },
+        { emoji: "\u{1F32F}", name: "\u0639\u0644\u0628 \u0644\u0641\u0627\u0626\u0641", desc: "\u062A\u063A\u0644\u064A\u0641 \u0645\u062A\u064A\u0646 \u0644\u0644\u0641\u0627\u0626\u0641 \u0648\u0627\u0644\u0631\u0648\u0644\u0627\u062A" },
+        { emoji: "\u{1F9FB}", name: "\u0645\u0646\u0627\u062F\u064A\u0644", desc: "\u0645\u0646\u0627\u062F\u064A\u0644 \u0645\u0637\u0628\u0648\u0639\u0629 \u0628\u0625\u0639\u0644\u0627\u0646\u0627\u062A \u0645\u062D\u0644\u064A\u0629" },
+        { emoji: "\u{1F961}", name: "\u0623\u0643\u064A\u0627\u0633 \u0648\u0631\u0642\u064A\u0629", desc: "\u0623\u0643\u064A\u0627\u0633 \u062A\u064A\u0643 \u0623\u0648\u064A \u0645\u0639 \u0637\u0628\u0627\u0639\u0629 \u0625\u0639\u0644\u0627\u0646\u064A\u0629" },
+        { emoji: "\u{1F956}", name: "\u0648\u0631\u0642 \u062A\u063A\u0644\u064A\u0641", desc: "\u0648\u0631\u0642 \u0645\u0642\u0627\u0648\u0645 \u0644\u0644\u062F\u0647\u0648\u0646 \u0645\u0639 \u0639\u0631\u0648\u0636 \u0645\u062D\u0644\u064A\u0629" },
+        { emoji: "\u2615", name: "\u0623\u0643\u0648\u0627\u0628 \u0648\u0631\u0642\u064A\u0629", desc: "\u0623\u0643\u0648\u0627\u0628 \u0645\u0639 \u0645\u0633\u0627\u062D\u0629 \u0625\u0639\u0644\u0627\u0646\u064A\u0629" },
+        { emoji: "\u{1F962}", name: "\u0623\u062F\u0648\u0627\u062A \u0645\u0627\u0626\u062F\u0629", desc: "\u062A\u063A\u0644\u064A\u0641 \u0623\u062F\u0648\u0627\u062A \u0645\u0627\u0626\u062F\u0629 \u0628\u0627\u0644\u0639\u0644\u0627\u0645\u0629 \u0627\u0644\u062A\u062C\u0627\u0631\u064A\u0629" },
+        { emoji: "\u267B\uFE0F", name: "\u0645\u0648\u0627\u062F \u0635\u062F\u064A\u0642\u0629 \u0644\u0644\u0628\u064A\u0626\u0629", desc: "\u0645\u0639\u062A\u0645\u062F\u0629 FSC\u060C 100% \u0642\u0627\u0628\u0644\u0629 \u0644\u0625\u0639\u0627\u062F\u0629 \u0627\u0644\u062A\u062F\u0648\u064A\u0631" }
+      ]
+    },
+    cta: { title: "\u0644\u0646\u062A\u062D\u062F\u062B", desc: "\u0633\u0648\u0627\u0621 \u0643\u0646\u062A \u0645\u0637\u0639\u0645\u0627\u064B \u0623\u0648 \u0645\u0639\u0644\u0646\u0627\u064B \u2014 \u0633\u0646\u062C\u062F \u0627\u0644\u062D\u0644 \u0627\u0644\u0645\u0646\u0627\u0633\u0628 \u0644\u0643.", btn: "\u{1F7E2} info@madbud.dk", footer: "MadBud.dk \u00A9 2026 \u2014 \u062A\u063A\u0644\u064A\u0641 \u0630\u0643\u064A\u060C \u0625\u0639\u0644\u0627\u0646\u0627\u062A \u0623\u0630\u0643\u0649" }
+  },
+  hu: {
+    flag: "\u{1F1ED}\u{1F1FA}", label: "Magyar",
+    hero: { title: "Legyen Partner", desc: "Pizzadobozok és csomagolás helyi hirdetésekkel belül.<br>Az éttermek pénzt takarítanak meg. A hirdetők elérik a helyi ügyfeleket.", btnRestLabel: "Éttermeknek", btnRestDesc: "Olcsóbb vagy ingyenes csomagolás", btnAdvLabel: "Hirdetőknek", btnAdvDesc: "Hiper-lokális hirdetés", swipe: "Húzd" },
+    rest: {
+      title: "Az Ön Éttermének",
+      subtitle: "Ugyanaz a minőségi csomagolás, amit már vásárol \u2014 de olcsóbban vagy teljesen ingyen. A hirdetési bevétel fizeti a dobozokat.",
+      before: "ELŐTTE", after: "MADBUD-DAL", beforePrice: "Teljes Ár", beforeDesc: "Standard üres csomagolás", afterPrice: "Olcsóbb!", afterDesc: "A hirdetések fizetik a csomagolást",
+      whyTitle: "MIÉRT SZERETIK AZ ÉTTERMEK:",
+      whyItems: ["Ugyanolyan minőségű pizzadobozok és élelmiszer-csomagolás","Alacsonyabb ár \u2014 a hirdetések fizetik a költség egy részét","Nincs versenytárs hirdetés \u2014 csak kiegészítő helyi vállalkozások","Az ügyfelek helyi helyeket fedeznek fel \u2014 értéket ad az étkezéshez","Nincs extra munka a személyzetnek"]
+    },
+    products: {
+      badge: "TERMÉKEK", title: "Hirdetési Felületek", subtitle: "Két hirdetési formátum \u2014 válassza a kampányához illőt.",
+      gridBadge: "3\u00D73 RÁCS \u2014 8 HELY", gridTitle: "A Doboz Teteje", gridDesc: "Nyolc hirdetési hely rácsos elrendezésben a doboz tetején. Az étterem saját logója középen. Ideális több helyi hirdető számára.",
+      fullBadge: "TELJES HIRDETÉSI FELÜLET", fullTitle: "A Fedél Belseje", fullDesc: "Egyetlen hirdető használja a fedél teljes belső felületét. Garantált figyelem a doboz kinyitásának pillanatában.",
+      note: "Minden hirdetés teljes színben, FSC-tanúsított, újrahasznosítható anyagra nyomtatva. QR-kódok és kedvezménykuponok integrálhatók."
+    },
+    adv: {
+      title: "Helyi Hirdetőknek",
+      subtitle: "Érje el a valódi, közeli ügyfeleket online és offline csatornákon \u2014 pizzadobozoktól az alkalmazás-platformokig.",
+      momentEmoji: "\u{1F4E6} \u27A1 \u{1F355} \u27A1 \u{1F440}",
+      momentTitle: 'A \u201EDobozt Kinyitom\u201D Pillanat',
+      momentDesc: "Az ügyfél kinyitja a pizzát \u2192 meglátja a hirdetését a fedélben \u2192 garantált figyelem 20+ percig",
+      offlineTitle: "Offline Csatornák", offlineList: "Pizzadobozok \u2022 Burgerdobozok<br>Papírzacskók \u2022 Szalvéták<br>Csomagolópapír",
+      onlineTitle: "Online Csatornák", onlineList: "MadBud App \u2022 Weboldal<br>Étterem Vezérlőpult<br>Push értesítések",
+      whyTitle: "MIÉRT SZERETIK A HELYI VÁLLALKOZÁSOK:",
+      whyItems: ["Hiper-lokális célzás \u2014 a tényleges szomszédságod","Foglyul ejtett közönség \u2014 az emberek 20+ percig ülnek és esznek","Megfizethető hirdetési árak kisvállalkozásoknak","Fizikai hirdetés \u2014 nincs hirdetésblokkoló, nincs elgörgetés"],
+      idealTitle: "IDEÁLIS HIRDETŐK:",
+      idealBiz: ["Fodrászatok","Edzőtermek","Autószerviz","Fogorvosok","Állatkereskedések","Virágboltok","Magánoktatás","Jóga Stúdiók"]
+    },
+    items: {
+      badge: "KÍNÁLAT", title: "Amit Szállítunk", subtitle: "Komplett csomagolási megoldás hirdetési felülettel \u2014 minden egyben.",
+      list: [
+        { emoji: "\u{1F355}", name: "Pizzadobozok", desc: "26cm \u2013 50cm, hirdetési panelekkel" },
+        { emoji: "\u{1F354}", name: "Burgerdobozok", desc: "Fedélben hirdetéssel" },
+        { emoji: "\u{1F32F}", name: "Wrap-dobozok", desc: "Erős csomagolás wrapokhoz és tekercsekhez" },
+        { emoji: "\u{1F9FB}", name: "Szalvéták", desc: "Nyomtatott szalvéták helyi hirdetésekkel" },
+        { emoji: "\u{1F961}", name: "Papírzacskók", desc: "Elviteles zacskók hirdetés nyomattal" },
+        { emoji: "\u{1F956}", name: "Csomagolópapír", desc: "Zsírálló papír helyi ajánlatokkal" },
+        { emoji: "\u2615", name: "Papírpoharak", desc: "Poharak hirdetési felülettel" },
+        { emoji: "\u{1F962}", name: "Evőeszközök", desc: "Márkás evőeszköz csomagolás" },
+        { emoji: "\u267B\uFE0F", name: "Öko Anyagok", desc: "FSC-tanúsított, 100% újrahasznosítható" }
+      ]
+    },
+    cta: { title: "Beszéljünk", desc: "Akár étterem, akár hirdető \u2014 megtaláljuk az Önnek megfelelő megoldást.", btn: "\u{1F7E2} info@madbud.dk", footer: "MadBud.dk \u00A9 2026 \u2014 Okos Csomagolás, Okosabb Hirdetés" }
+  }
+};
 
-// Create nav dots
-for (let i = 0; i < TOTAL; i++) {
-  const dot = document.createElement('button');
-  dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
-  dot.setAttribute('aria-label', 'Slide ' + (i + 1));
-  dot.onclick = () => goSlide(i);
-  dotsContainer.appendChild(dot);
+const LANGS = ['en','da','tr','ar','hu'];
+const svgBoxBlank = '<svg viewBox="0 0 80 80" width="60" height="60"><rect x="10" y="25" width="60" height="40" rx="4" fill="#D4A574" stroke="#8B6914" stroke-width="2"/><polygon points="10,25 20,10 70,10 70,25" fill="#E8C9A0" stroke="#8B6914" stroke-width="2"/></svg>';
+const svgBoxAd = '<svg viewBox="0 0 80 80" width="60" height="60"><rect x="10" y="25" width="60" height="40" rx="4" fill="#D4A574" stroke="#8B6914" stroke-width="2"/><polygon points="10,25 20,10 70,10 70,25" fill="#E8C9A0" stroke="#8B6914" stroke-width="2"/><rect x="18" y="32" width="44" height="26" rx="2" fill="#FFF8E7" stroke="#C9A86C" stroke-width="1"/><rect x="22" y="36" width="36" height="8" rx="1" fill="#3498DB" opacity="0.7"/><text x="40" y="43" text-anchor="middle" font-size="5" font-weight="bold" fill="white">AD</text></svg>';
+const chevron = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8B949E" stroke-width="2" stroke-linecap="round"><polyline points="6,9 12,15 18,9"/></svg>';
+
+let lang = 'en';
+
+function ck(color) {
+  return '<div class="check-icon '+color+'">&#x2713;</div>';
+}
+
+function render() {
+  const t = T[lang];
+  const rtl = !!t.rtl;
+  document.body.className = rtl ? 'rtl' : '';
+  document.documentElement.lang = lang;
+  document.documentElement.dir = rtl ? 'rtl' : 'ltr';
+
+  let h = '';
+
+  // Language bar
+  h += '<div class="lang-bar">';
+  LANGS.forEach(l => {
+    h += '<button class="lang-btn'+(l===lang?' active':'')+'" onclick="setLang(\''+l+'\')">'+T[l].flag+' '+T[l].label+'</button>';
+  });
+  h += '</div>';
+
+  // Nav dots
+  h += '<div class="nav-dots" id="navDots"></div>';
+
+  // Slideshow
+  h += '<div class="slideshow" id="slideshow">';
+
+  // SLIDE 0: Hero
+  h += '<div class="slide" id="slide-0">';
+  h += '<div class="badge">MadBud.dk</div>';
+  h += '<h1 class="hero-title">'+t.hero.title+'</h1>';
+  h += '<p style="font-size:16px;color:var(--text-muted);text-align:center;max-width:520px;line-height:1.6;margin-bottom:8px;">'+t.hero.desc+'</p>';
+  h += '<div class="audience-row">';
+  h += '<a href="#slide-1" class="audience-btn restaurant" onclick="goSlide(1)"><div class="audience-emoji">&#x1F355;</div><div class="audience-label">'+t.hero.btnRestLabel+'</div><div class="audience-desc">'+t.hero.btnRestDesc+'</div></a>';
+  h += '<a href="#slide-3" class="audience-btn advertiser" onclick="goSlide(3)"><div class="audience-emoji">&#x1F4E2;</div><div class="audience-label">'+t.hero.btnAdvLabel+'</div><div class="audience-desc">'+t.hero.btnAdvDesc+'</div></a>';
+  h += '</div>';
+  h += '<div class="swipe-hint">'+chevron+'<span>'+t.hero.swipe+'</span></div>';
+  h += '</div>';
+
+  // SLIDE 1: Restaurants
+  const r = t.rest;
+  h += '<div class="slide" id="slide-1"><div class="content-card card-blue">';
+  h += '<div style="font-size:36px;margin-bottom:12px;">&#x1F355;</div>';
+  h += '<h2 class="section-title" style="color:var(--blue);">'+r.title+'</h2>';
+  h += '<p class="section-subtitle">'+r.subtitle+'</p>';
+  h += '<div class="compare-row">';
+  h += '<div class="compare-box before"><div class="compare-label" style="color:var(--red);">'+r.before+'</div>'+svgBoxBlank+'<div class="compare-price" style="color:var(--red);">'+r.beforePrice+'</div><div class="compare-desc">'+r.beforeDesc+'</div></div>';
+  h += '<div class="compare-box after"><div class="compare-label" style="color:var(--green);">'+r.after+'</div>'+svgBoxAd+'<div class="compare-price" style="color:var(--green);">'+r.afterPrice+'</div><div class="compare-desc">'+r.afterDesc+'</div></div>';
+  h += '</div>';
+  h += '<div class="check-list"><div style="font-size:13px;font-weight:700;color:var(--blue);margin-bottom:12px;">'+r.whyTitle+'</div>';
+  r.whyItems.forEach(i => { h += '<div class="check-item">'+ck('blue')+'<span>'+i+'</span></div>'; });
+  h += '</div></div></div>';
+
+  // SLIDE 2: Products
+  const p = t.products;
+  h += '<div class="slide" id="slide-2"><div style="text-align:center;margin-bottom:20px;max-width:680px;">';
+  h += '<div class="badge">'+p.badge+'</div>';
+  h += '<h2 class="section-title" style="color:var(--orange);">'+p.title+'</h2>';
+  h += '<p class="section-subtitle" style="margin-bottom:16px;">'+p.subtitle+'</p></div>';
+  h += '<div class="photo-grid">';
+  h += '<div class="photo-card"><img src="./closedpizza.png" alt=""><div class="photo-card-body"><div class="ad-type-badge" style="background:rgba(230,126,34,0.12);color:var(--orange);border:1px solid rgba(230,126,34,0.3);">'+p.gridBadge+'</div><div class="photo-card-title" style="color:var(--orange);">'+p.gridTitle+'</div><div class="photo-card-desc">'+p.gridDesc+'</div></div></div>';
+  h += '<div class="photo-card"><img src="./openbox.png" alt=""><div class="photo-card-body"><div class="ad-type-badge" style="background:rgba(39,174,96,0.12);color:var(--green);border:1px solid rgba(39,174,96,0.3);">'+p.fullBadge+'</div><div class="photo-card-title" style="color:var(--green);">'+p.fullTitle+'</div><div class="photo-card-desc">'+p.fullDesc+'</div></div></div>';
+  h += '</div>';
+  h += '<div style="max-width:680px;text-align:center;"><p style="font-size:12px;color:var(--text-muted);line-height:1.5;">'+p.note+'</p></div></div>';
+
+  // SLIDE 3: Advertisers
+  const a = t.adv;
+  h += '<div class="slide" id="slide-3"><div class="content-card card-green">';
+  h += '<div style="font-size:36px;margin-bottom:12px;">&#x1F4E2;</div>';
+  h += '<h2 class="section-title" style="color:var(--green);">'+a.title+'</h2>';
+  h += '<p class="section-subtitle">'+a.subtitle+'</p>';
+  h += '<div class="moment-box"><div style="font-size:36px;margin-bottom:8px;">'+a.momentEmoji+'</div>';
+  h += '<p style="font-size:14px;color:var(--green);font-weight:600;margin:0 0 4px;">'+a.momentTitle+'</p>';
+  h += '<p style="font-size:12px;color:var(--text-muted);margin:0;">'+a.momentDesc+'</p></div>';
+  h += '<div class="channels-grid">';
+  h += '<div class="channel-card offline"><div class="channel-emoji">&#x1F4E6;</div><div class="channel-title" style="color:var(--orange);">'+a.offlineTitle+'</div><div class="channel-list">'+a.offlineList+'</div></div>';
+  h += '<div class="channel-card online"><div class="channel-emoji">&#x1F4F1;</div><div class="channel-title" style="color:var(--blue);">'+a.onlineTitle+'</div><div class="channel-list">'+a.onlineList+'</div></div>';
+  h += '</div>';
+  h += '<div class="check-list"><div style="font-size:13px;font-weight:700;color:var(--green);margin-bottom:12px;">'+a.whyTitle+'</div>';
+  a.whyItems.forEach(i => { h += '<div class="check-item">'+ck('green')+'<span>'+i+'</span></div>'; });
+  h += '</div>';
+  h += '<div style="text-align:center;margin-top:16px;"><div style="font-size:12px;font-weight:700;color:var(--gold);margin-bottom:8px;">'+a.idealTitle+'</div>';
+  h += '<div class="biz-tags">'+a.idealBiz.map(b => '<span class="biz-tag">'+b+'</span>').join('')+'</div></div>';
+  h += '</div></div>';
+
+  // SLIDE 4: Items
+  const it = t.items;
+  h += '<div class="slide" id="slide-4"><div style="text-align:center;margin-bottom:24px;">';
+  h += '<div class="badge">'+it.badge+'</div>';
+  h += '<h2 class="section-title" style="color:var(--gold);">'+it.title+'</h2>';
+  h += '<p class="section-subtitle">'+it.subtitle+'</p></div>';
+  h += '<div class="items-grid">';
+  it.list.forEach(item => {
+    h += '<div class="item-card"><div class="item-icon">'+item.emoji+'</div><div class="item-label">'+item.name+'</div><div class="item-desc">'+item.desc+'</div></div>';
+  });
+  h += '</div></div>';
+
+  // SLIDE 5: CTA
+  const c = t.cta;
+  h += '<div class="slide" id="slide-5"><div style="text-align:center;max-width:500px;">';
+  h += '<div style="font-size:56px;margin-bottom:20px;">&#x1F91D;</div>';
+  h += '<h2 class="hero-title" style="margin-bottom:16px;">'+c.title+'</h2>';
+  h += '<p style="font-size:15px;color:var(--text-muted);line-height:1.6;margin-bottom:32px;">'+c.desc+'</p>';
+  h += '<a href="mailto:info@madbud.dk" class="cta-btn" style="font-size:17px;">'+c.btn+'</a>';
+  h += '<p style="font-size:11px;color:#484F58;margin-top:24px;">'+c.footer+'</p>';
+  h += '</div></div>';
+
+  h += '</div>'; // slideshow
+
+  document.body.innerHTML = h;
+  initSlideshow();
+}
+
+function initSlideshow() {
+  const slideshow = document.getElementById('slideshow');
+  const slides = document.querySelectorAll('.slide');
+  const dotsContainer = document.getElementById('navDots');
+  const TOTAL = slides.length;
+
+  dotsContainer.innerHTML = '';
+  for (let i = 0; i < TOTAL; i++) {
+    const dot = document.createElement('button');
+    dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+    dot.onclick = () => goSlide(i);
+    dotsContainer.appendChild(dot);
+  }
+
+  let scrollTimeout;
+  slideshow.addEventListener('scroll', () => {
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+      const scrollTop = slideshow.scrollTop;
+      const viewportH = slideshow.clientHeight;
+      let activeIndex = Math.round(scrollTop / viewportH);
+      activeIndex = Math.max(0, Math.min(activeIndex, TOTAL - 1));
+      document.querySelectorAll('.nav-dot').forEach((d, i) => {
+        d.classList.toggle('active', i === activeIndex);
+      });
+      const hint = document.querySelector('.swipe-hint');
+      if (hint && activeIndex > 0) hint.style.display = 'none';
+    }, 50);
+  });
 }
 
 function goSlide(index) {
-  slides[index].scrollIntoView({ behavior: 'smooth' });
+  const slides = document.querySelectorAll('.slide');
+  if (slides[index]) slides[index].scrollIntoView({ behavior: 'smooth' });
 }
 
-// Update active dot on scroll
-let scrollTimeout;
-slideshow.addEventListener('scroll', () => {
-  clearTimeout(scrollTimeout);
-  scrollTimeout = setTimeout(() => {
-    const scrollTop = slideshow.scrollTop;
-    const viewportH = slideshow.clientHeight;
-    let activeIndex = Math.round(scrollTop / viewportH);
-    activeIndex = Math.max(0, Math.min(activeIndex, TOTAL - 1));
+function setLang(l) {
+  lang = l;
+  render();
+}
 
-    document.querySelectorAll('.nav-dot').forEach((d, i) => {
-      d.classList.toggle('active', i === activeIndex);
-    });
-
-    // Hide swipe hint after first scroll
-    const hint = document.querySelector('.swipe-hint');
-    if (hint && activeIndex > 0) hint.style.display = 'none';
-  }, 50);
-});
-
-// Keyboard navigation
 document.addEventListener('keydown', (e) => {
+  const slideshow = document.getElementById('slideshow');
+  if (!slideshow) return;
   const scrollTop = slideshow.scrollTop;
   const viewportH = slideshow.clientHeight;
   const current = Math.round(scrollTop / viewportH);
-
+  const total = document.querySelectorAll('.slide').length;
   if (e.key === 'ArrowDown' || e.key === ' ') {
     e.preventDefault();
-    if (current < TOTAL - 1) goSlide(current + 1);
+    if (current < total - 1) goSlide(current + 1);
   } else if (e.key === 'ArrowUp') {
     e.preventDefault();
     if (current > 0) goSlide(current - 1);
   }
 });
-</script>
 
+render();
+</script>
 </body>
 </html>
